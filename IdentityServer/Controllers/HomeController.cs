@@ -1,4 +1,6 @@
 using IdentityServer.Models;
+using IdentityServer.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,10 +9,12 @@ namespace IdentityServer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<AppUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager)
         {
             _logger = logger;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -20,6 +24,37 @@ namespace IdentityServer.Controllers
 
         public IActionResult Privacy()
         {
+            return View();
+        }
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SignUp(SignUpViewModel request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var identityResult = await _userManager.CreateAsync(new() {
+                UserName =request.UserName,
+                Email = request.Email,
+                PhoneNumber=request.Phone,
+                },request.PasswordConfirm);
+
+            if (identityResult.Succeeded)
+            {
+                TempData["SuccessMessage"] = "Üyelik Kayýt iþlemi baþarýlý";
+                return Redirect(nameof(HomeController.SignUp));
+            }
+
+            foreach (IdentityError item in identityResult.Errors)
+            {
+                ModelState.AddModelError(string.Empty,item.Description);
+            }
+
             return View();
         }
 

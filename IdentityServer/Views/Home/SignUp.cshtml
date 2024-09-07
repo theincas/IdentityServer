@@ -1,0 +1,57 @@
+﻿@model SignUpViewModel
+@{
+    ViewData["Title"] = "SignUp";
+}
+<div class="col-md-6 offset-md-3">
+    <form method="post">
+        <h2>Kayıt Formu</h2>
+        @if (TempData["SuccessMessage"]!=null)
+        {
+            <div class="alert alert-info" role="alert">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <div class="row mb-3">
+            <label for="inputUserName" class="col-sm-2 col-form-label" asp-for="UserName">Kullanıcı Adı</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputUserName" asp-for="UserName">
+                <span class="text-danger" asp-validation-for="UserName"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="inputEmail" class="col-sm-2 col-form-label" asp-for="Email">E-Posta</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="inputEmail" asp-for="Email">
+                <span class="text-danger" asp-validation-for="Email"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="inputPhone" class="col-sm-2 col-form-label" asp-for="Phone">Telefon</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputPhone" asp-for="Phone">
+                <span class="text-danger" asp-validation-for="Phone"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="inputPassword" class="col-sm-2 col-form-label" asp-for="Password">Şifre</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputPassword" asp-for="Password">
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="inputPasswordConfirm" class="col-sm-2 col-form-label" asp-for="PasswordConfirm">Password</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputPasswordConfirm" asp-for="PasswordConfirm">
+                <span class="text-danger" asp-validation-for="PasswordConfirm"></span>
+            </div>
+        </div>
+        <div class="col-md-8 offset-md-2">
+            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+        </div>
+
+    </form>
+</div>
