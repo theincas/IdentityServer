@@ -1,3 +1,4 @@
+using IdentityServer.Extensions;
 using IdentityServer.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,8 +13,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlCon"));
 });
 
-builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentityWithExtension();
 
+//Cookie iþlemleri
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    var cookieBuilder = new CookieBuilder();
+    cookieBuilder.Name = "DefaultCookie";
+    opt.LoginPath = new PathString("/Home/SignIn");
+    opt.LogoutPath = new PathString("/Member/logout");
+    opt.Cookie = cookieBuilder;
+    opt.ExpireTimeSpan=TimeSpan.FromDays(3);
+    opt.SlidingExpiration = true;// Kullanýcý 3 gün boyunca giriþ yaparsa tekrar 3 gün zaman tanýnýr.
+});
 
 
 var app = builder.Build();
@@ -31,7 +43,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();// middleware doðrulama için eklendi
 app.UseAuthorization();
 
 app.MapControllerRoute(
