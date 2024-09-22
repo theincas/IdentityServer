@@ -18,6 +18,7 @@ namespace IdentityServer.ViewModels
         [Display(Name = "Mail :")]
         public string Email { get; set; }
 
+        [DataType(DataType.Password)]
         [Required(ErrorMessage = "Şifre Boş Geçilemez!")]
         [Display(Name = "Şifre :")]
         public string Password { get; set; }
