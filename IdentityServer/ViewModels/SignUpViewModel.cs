@@ -26,13 +26,16 @@ namespace IdentityServer.ViewModels
         //[Display(Name = "Telefon :")]
         public string Phone { get; set; }
 
+
         //[Required(ErrorMessage = "Şifre Boş Geçilemez!")]
         //[Display(Name = "Şifre :")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         //[Compare(nameof(Password),ErrorMessage ="Şifreler uyuşmamaktadır.")]
         //[Required(ErrorMessage = "Şifre Tekrar Boş Geçilemez!")]
         //[Display(Name = "Şifre Tekrar :")]
+        [DataType(DataType.Password)]
         public string PasswordConfirm { get; set; }
     }
 }

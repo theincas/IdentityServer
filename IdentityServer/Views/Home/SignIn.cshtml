@@ -2,16 +2,24 @@
 @{
     ViewData["Title"] = "SignIn";
 }
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["SuccessMessage"]
+            </div>
+        }
         <form method="post">
             <h2>Kullanıcı Giriş</h2>
             <div class="mb-3">
                 <label for="inputEmail" class="form-label" asp-for="Email">E-Posta</label>
-                    <input type="email" class="form-control" id="inputEmail" asp-for="Email">
-                    <span class="text-danger" asp-validation-for="Email"></span>
+                <input type="email" class="form-control" id="inputEmail" asp-for="Email">
+                <span class="text-danger" asp-validation-for="Email"></span>
             </div>
             <div class="mb-3">
                 <label for="inputPassword" class="form-label" asp-for="Password">Şifre</label>
@@ -19,11 +27,23 @@
                 <span class="text-danger" asp-validation-for="Password"></span>
 
             </div>
-            <div class="mb-3 form-check">
-                <label class="form-check-label" for="exampleCheck1" asp-for="RememberMe">Beni Hatırla</label>
-                <input class="form-check-input" asp-for="RememberMe">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 form-check">
+                        <label class="form-check-label" for="exampleCheck1" asp-for="RememberMe">Beni Hatırla</label>
+                        <input class="form-check-input" asp-for="RememberMe">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <a class="btn btn-outline-secondary btn-sm float-end" asp-controller="Home" asp-action="ForgetPassword">Şifremi unuttum</a>
+                    </div>
+                </div>
             </div>
+
+
             <button type="submit" class="btn btn-primary">Üye Giriş</button>
+
         </form>
     </div>
 </div>

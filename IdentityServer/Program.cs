@@ -1,6 +1,10 @@
 using IdentityServer.Extensions;
 using IdentityServer.Models;
+using IdentityServer.OptionsModels;
+using IdentityServer.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +16,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlCon"));
 });
+
+//Email gönderme iþlemleri için appsettings'e tanýmlama yapýldý ve oradaki tanýmlamalarý okuyabilmek için kullanýlmaktadýr.
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddIdentityWithExtension();
 

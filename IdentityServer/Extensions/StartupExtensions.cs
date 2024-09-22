@@ -1,6 +1,7 @@
 ﻿using IdentityServer.CustomValidations;
 using IdentityServer.Localization;
 using IdentityServer.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdentityServer.Extensions
 {
@@ -8,6 +9,12 @@ namespace IdentityServer.Extensions
     {
         public static void AddIdentityWithExtension(this IServiceCollection services)
         {
+            //ResetPassword işlemi için 2 saatlik token ömrü belirledik.
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+            {
+                opt.TokenLifespan = TimeSpan.FromHours(2);
+            });
+
             services.AddIdentity<AppUser, AppRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
@@ -26,6 +33,7 @@ namespace IdentityServer.Extensions
             }).AddPasswordValidator<PasswordValidator>()
             .AddUserValidator<UserValidator>()
             .AddErrorDescriber<LocalizationIdentityErrorDescriber>()
+            .AddDefaultTokenProviders()
             .AddEntityFrameworkStores<AppDbContext>();
         }
     }
