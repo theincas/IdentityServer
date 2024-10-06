@@ -30,12 +30,14 @@ namespace IdentityServer.ViewModels
         //[Required(ErrorMessage = "Şifre Boş Geçilemez!")]
         //[Display(Name = "Şifre :")]
         [DataType(DataType.Password)]
+        [MinLength(6, ErrorMessage = "Şifreniz en az 6 karakter olabilir")]
         public string Password { get; set; }
 
         //[Compare(nameof(Password),ErrorMessage ="Şifreler uyuşmamaktadır.")]
         //[Required(ErrorMessage = "Şifre Tekrar Boş Geçilemez!")]
         //[Display(Name = "Şifre Tekrar :")]
         [DataType(DataType.Password)]
+        [MinLength(6, ErrorMessage = "Şifreniz en az 6 karakter olabilir")]
         public string PasswordConfirm { get; set; }
     }
 }

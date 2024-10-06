@@ -79,6 +79,11 @@ namespace IdentityServer.Controllers
         [HttpPost]
         public async Task<IActionResult> SignIn(SignInViewModel model, string? returnUrl = null)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             returnUrl = returnUrl ?? Url.Action("Index", "Home");
 
             var hasUser = await _userManager.FindByEmailAsync(model.Email);
@@ -146,9 +151,6 @@ namespace IdentityServer.Controllers
             string passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(hasUser);
 
             var passwordResetLink = Url.Action("ResetPassword", "Home", new { userId = hasUser.Id, Token = passwordResetToken },HttpContext.Request.Scheme);
-
-
-            //TODO: Email Service : inah njnz urjt mbcu
 
             await _emailService.SendResetPasswordEmail(passwordResetLink!,hasUser.Email!);
 
