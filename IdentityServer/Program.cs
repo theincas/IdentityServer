@@ -5,6 +5,7 @@ using IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,9 @@ builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Emai
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddIdentityWithExtension();
+
+//Bu sýnýf(IfileProvider) nerede kullanýrsam fiziksel olarak dosyayý tutmamý saðlayacak
+builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
 
 //Cookie iþlemleri
 builder.Services.ConfigureApplicationCookie(opt =>
