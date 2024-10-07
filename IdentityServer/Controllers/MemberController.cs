@@ -170,5 +170,10 @@ namespace IdentityServer.Controllers
 
             return View(userEditViewModel);
         }
+    
+        public IActionResult AccessDenied(string ReturnUrl)
+        {
+            return View();
+        }
     }
 }
