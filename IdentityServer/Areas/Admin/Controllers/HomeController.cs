@@ -1,11 +1,13 @@
 ﻿using IdentityServer.Areas.Admin.Models;
 using IdentityServer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServer.Areas.Admin.Controllers
 {
+    [Authorize(Roles ="Admin")]
     [Area("Admin")]
     public class HomeController : Controller
     {
@@ -27,8 +29,8 @@ namespace IdentityServer.Areas.Admin.Controllers
             var userViewModelList=userList.Select(x=> new UserViewModel
             {
                 UserId = x.Id,
-                Email=x.Email,
-                UserName=x.UserName
+                Email=x.Email!,
+                UserName=x.UserName!
             }).ToList();
             return View(userViewModelList);
         }

@@ -34,6 +34,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
     cookieBuilder.Name = "DefaultCookie";
     opt.LoginPath = new PathString("/Home/SignIn");
     opt.LogoutPath = new PathString("/Member/logout");
+    opt.AccessDeniedPath = new PathString("/Member/AccessDenied");
     opt.Cookie = cookieBuilder;
     opt.ExpireTimeSpan=TimeSpan.FromDays(3);
     opt.SlidingExpiration = true;// Kullanýcý 3 gün boyunca giriþ yaparsa tekrar 3 gün zaman tanýnýr.
